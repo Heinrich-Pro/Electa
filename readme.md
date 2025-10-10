@@ -117,7 +117,7 @@ Application Django complète pour le calcul et l'affichage en temps réel des r�
 ### Étape 1 : Cloner le projet
 
 ```bash
-git clone https://github.com/votre-username/election-system.git
+git clone https://github.com/Heinrich-Pro/Electa.git
 cd election-system
 ```
 
@@ -552,11 +552,11 @@ Utilisez la section [Issues](https://github.com/votre-username/election-system/i
 
 ## 📞 Contact
 
-Votre Nom - [@votre_twitter](https://twitter.com/votre_twitter)
+Votre Nom - [Heinrich](https://twitter.com/votre_twitter)
 
 Email : [heinrichtechcraft@gmail.com]()
 
-Lien du projet : [https://github.com/votre-username/election-system](https://github.com/votre-username/election-system)
+Lien du projet : [https://github.com/Heinrich-Pro/Electa.git](https://github.com/votre-username/election-system)
 
 ## 🙏 Remerciements
 
