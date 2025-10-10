@@ -1,0 +1,139 @@
+{% extends 'elections/base.html' %}
+
+{% block title %}Résultats par Bureau{% endblock %}
+
+{% block content %}
+<h1 style="color: #2a5298; margin-bottom: 30px;">🗳️ Résultats par Bureau de Vote</h1>
+
+<div style="margin-bottom: 30px;">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher un bureau, centre ou commune..."
+           style="width: 100%; padding: 15px; border: 2px solid #667eea; border-radius: 10px;
+                  font-size: 16px; box-sizing: border-box;">
+</div>
+
+{% for data in bureaux_data %}
+<div class="bureau-card" style="background: white; border: 2px solid #e0e0e0; border-radius: 10px;
+                                 padding: 20px; margin-bottom: 20px; transition: all 0.3s;">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;
+                flex-wrap: wrap; gap: 15px;">
+        <div style="flex: 1; min-width: 250px;">
+            <h2 style="color: #2a5298; margin: 0 0 5px 0;">
+                📍 Bureau {{ data.bureau.numero }}
+            </h2>
+            <p style="color: #666; margin: 5px 0;">
+                <strong>Centre:</strong> {{ data.bureau.centre.nom }}<br>
+                <strong>Commune:</strong> {{ data.bureau.centre.commune }}
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white; padding: 15px 20px; border-radius: 8px; text-align: center;
+                        min-width: 120px;">
+                <div style="font-size: 0.9em; opacity: 0.9;">Inscrits</div>
+                <div style="font-size: 1.8em; font-weight: bold;">{{ data.bureau.nombre_inscrits }}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+                        color: white; padding: 15px 20px; border-radius: 8px; text-align: center;
+                        min-width: 120px;">
+                <div style="font-size: 0.9em; opacity: 0.9;">Votants</div>
+                <div style="font-size: 1.8em; font-weight: bold;">{{ data.total_voix }}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+                        color: white; padding: 15px 20px; border-radius: 8px; text-align: center;
+                        min-width: 120px;">
+                <div style="font-size: 0.9em; opacity: 0.9;">Participation</div>
+                <div style="font-size: 1.8em; font-weight: bold;">{{ data.taux_participation }}%</div>
+            </div>
+        </div>
+    </div>
+
+    {% if data.gagnant %}
+    <div style="background: #fff3cd; border-left: 4px solid #FFD700; padding: 15px;
+                border-radius: 5px; margin-bottom: 15px;">
+        <strong>🏆 Gagnant:</strong>
+        {{ data.gagnant.candidat.prenom }} {{ data.gagnant.candidat.nom }}
+        - <strong>{{ data.gagnant.voix }}</strong> voix ({{ data.gagnant.pourcentage }}%)
+    </div>
+    {% endif %}
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="background: #2a5298; color: white;">
+                <th style="padding: 12px; text-align: left;">N°</th>
+                <th style="padding: 12px; text-align: left;">Candidat</th>
+                <th style="padding: 12px; text-align: left;">Parti</th>
+                <th style="padding: 12px; text-align: center;">Voix</th>
+                <th style="padding: 12px; text-align: center;">%</th>
+                <th style="padding: 12px;">Barre de progression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultat in data.resultats %}
+            <tr style="border-bottom: 1px solid #e0e0e0; {% if forloop.first %}background: #f0f8ff;{% endif %}">
+                <td style="padding: 12px;">
+                    <strong style="color: #667eea;">{{ resultat.candidat.numero }}</strong>
+                </td>
+                <td style="padding: 12px;">
+                    <strong>{{ resultat.candidat.prenom }} {{ resultat.candidat.nom }}</strong>
+                </td>
+                <td style="padding: 12px; color: #666;">{{ resultat.candidat.parti }}</td>
+                <td style="padding: 12px; text-align: center;">
+                    <strong style="color: #2a5298; font-size: 1.1em;">{{ resultat.voix }}</strong>
+                </td>
+                <td style="padding: 12px; text-align: center;">
+                    <strong style="color: #764ba2;">{{ resultat.pourcentage }}%</strong>
+                </td>
+                <td style="padding: 12px;">
+                    <div style="background: #e0e0e0; border-radius: 10px; height: 25px;
+                                position: relative; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                                    height: 100%; width: {{ resultat.pourcentage }}%;
+                                    transition: width 0.5s ease; display: flex; align-items: center;
+                                    justify-content: flex-end; padding-right: 8px; color: white;
+                                    font-size: 0.85em; font-weight: bold;">
+                            {% if resultat.pourcentage > 10 %}{{ resultat.pourcentage }}%{% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 15px; text-align: right;">
+        <a href="{% url 'elections:detail_bureau' data.bureau.id %}"
+           style="display: inline-block; padding: 10px 20px; background: #667eea;
+                  color: white; text-decoration: none; border-radius: 5px;
+                  font-weight: bold; transition: background 0.3s;">
+            📋 Voir détails complets
+        </a>
+    </div>
+</div>
+{% empty %}
+<p style="text-align: center; color: #666; padding: 40px; background: #f8f9fa;
+          border-radius: 10px;">
+    Aucun bureau de vote enregistré pour le moment.
+</p>
+{% endfor %}
+
+<script>
+// Fonction de recherche
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    var searchText = this.value.toLowerCase();
+    var bureauCards = document.querySelectorAll('.bureau-card');
+
+    bureauCards.forEach(function(card) {
+        var text = card.textContent.toLowerCase();
+        if (text.includes(searchText)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+
+{% endblock %}

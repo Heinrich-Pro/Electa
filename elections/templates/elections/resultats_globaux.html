@@ -1,0 +1,60 @@
+{% extends 'elections/base.html' %}
+
+{% block title %}Résultats Globaux{% endblock %}
+
+{% block content %}
+<h1 style="color: #2a5298; margin-bottom: 30px;">📊 Résultats Globaux de l'Élection</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total des Inscrits</h3>
+        <div class="value">{{ total_inscrits|default:0 }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total des Votants</h3>
+        <div class="value">{{ total_voix|default:0 }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Taux de Participation</h3>
+        <div class="value">{{ taux_participation }}%</div>
+    </div>
+</div>
+
+<h2 style="color: #2a5298; margin: 30px 0 20px;">Classement des Candidats</h2>
+
+{% for resultat in resultats_candidats %}
+<div class="candidat-card">
+    <div class="candidat-info">
+        <h3>
+            {% if forloop.counter == 1 %}
+                <span class="rank first">1</span>
+            {% elif forloop.counter == 2 %}
+                <span class="rank second">2</span>
+            {% elif forloop.counter == 3 %}
+                <span class="rank third">3</span>
+            {% else %}
+                <span class="rank">{{ forloop.counter }}</span>
+            {% endif %}
+            {{ resultat.candidat.prenom }} {{ resultat.candidat.nom }}
+        </h3>
+        <p style="color: #666;">{{ resultat.candidat.parti }}</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ resultat.pourcentage }}%;">
+                {{ resultat.pourcentage }}%
+            </div>
+        </div>
+    </div>
+
+    <div class="candidat-stats">
+        <div class="voix">{{ resultat.voix }}</div>
+        <div class="pourcentage">voix</div>
+    </div>
+</div>
+{% empty %}
+<p style="text-align: center; color: #666; padding: 40px;">Aucun résultat disponible pour le moment.</p>
+{% endfor %}
+
+{% endblock %}

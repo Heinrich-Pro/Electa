@@ -1,0 +1,65 @@
+{% extends 'elections/base.html' %}
+
+{% block title %}Résultats par Centre{% endblock %}
+
+{% block content %}
+<h1 style="color: #2a5298; margin-bottom: 30px;">🏢 Résultats par Centre de Vote</h1>
+
+{% for data in centres_data %}
+<div class="centre-section">
+    <h2>{{ data.centre.nom }} - {{ data.centre.commune }}</h2>
+    <p style="color: #666; margin-bottom: 20px;">
+        📍 {{ data.centre.adresse }}<br>
+        👥 Inscrits: {{ data.total_inscrits }} | Votants: {{ data.total_voix }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rang</th>
+                <th>Candidat</th>
+                <th>Parti</th>
+                <th>Voix</th>
+                <th>Pourcentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultat in data.resultats %}
+            <tr>
+                <td>
+                    {% if forloop.counter == 1 %}
+                        <span class="rank first">{{ forloop.counter }}</span>
+                    {% elif forloop.counter == 2 %}
+                        <span class="rank second">{{ forloop.counter }}</span>
+                    {% elif forloop.counter == 3 %}
+                        <span class="rank third">{{ forloop.counter }}</span>
+                    {% else %}
+                        <span class="rank">{{ forloop.counter }}</span>
+                    {% endif %}
+                </td>
+                <td><strong>{{ resultat.candidat.prenom }} {{ resultat.candidat.nom }}</strong></td>
+                <td>{{ resultat.candidat.parti }}</td>
+                <td><strong>{{ resultat.voix }}</strong></td>
+                <td><strong>{{ resultat.pourcentage }}%</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+        <h4>Bureaux de vote dans ce centre:</h4>
+        {% for bureau in data.centre.bureaux.all %}
+            <a href="{% url 'elections:detail_bureau' bureau.id %}"
+               style="display: inline-block; padding: 8px 15px; margin: 5px;
+                      background: #667eea; color: white; text-decoration: none;
+                      border-radius: 5px;">
+                Bureau {{ bureau.numero }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% empty %}
+<p style="text-align: center; color: #666; padding: 40px;">Aucun centre de vote enregistré.</p>
+{% endfor %}
+
+{% endblock %}
