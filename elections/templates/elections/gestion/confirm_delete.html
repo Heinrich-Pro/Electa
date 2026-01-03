@@ -1,0 +1,25 @@
+{% extends 'elections/base.html' %}
+
+{% block content %}
+<div class="row" style="display: flex; justify-content: center;">
+    <div class="col-md-6" style="width: 100%; max-width: 500px;">
+        <div class="stat-card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);">
+            <h2>⚠️ Confirmation de suppression</h2>
+            <p style="margin: 20px 0;">Voulez-vous vraiment supprimer : <br><strong>{{ objet }}</strong> ?</p>
+            <p style="font-size: 0.9em; opacity: 0.9;">Cette action est irréversible.</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                    <a href="javascript:history.back()" style="background: white; color: #333; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                        Annuler
+                    </a>
+                    <button type="submit" style="background: #333; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        Oui, supprimer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

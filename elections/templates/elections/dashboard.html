@@ -1,0 +1,51 @@
+{% extends 'elections/base.html' %}
+
+{% block content %}
+<div class="dashboard-header" style="text-align: center; margin-bottom: 40px;">
+    <h1 style="color: #2a5298;">👩‍💻 Tableau de Bord Complet</h1>
+    <p style="color: #666;">Gestion complète des élections</p>
+</div>
+
+<h2 style="color: #2a5298; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px;">🗳️ Opérations de Vote</h2>
+<div class="stats-grid">
+    <a href="{% url 'elections:saisie_donnees' %}" class="stat-card dashboard-link" style="text-decoration: none; cursor: pointer; background: linear-gradient(135deg, #20bf6b 0%, #2ecc71 100%);">
+        <div style="font-size: 3em; margin-bottom: 15px;">🔢</div>
+        <h3>Saisir Résultats</h3>
+        <p style="font-size: 0.9em; opacity: 0.9;">Saisie des voix par bureau</p>
+    </a>
+    
+    <a href="{% url 'elections:resultats_globaux' %}" class="stat-card dashboard-link" style="text-decoration: none; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div style="font-size: 3em; margin-bottom: 15px;">📊</div>
+        <h3>Visualiser</h3>
+        <p style="font-size: 0.9em; opacity: 0.9;">Voir les résultats en direct</p>
+    </a>
+</div>
+
+<h2 style="color: #2a5298; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin: 40px 0 20px;">⚙️ Gestion des Données (Admin)</h2>
+<div class="stats-grid">
+    <a href="{% url 'elections:liste_candidats' %}" class="stat-card dashboard-link" style="text-decoration: none; cursor: pointer; background: white; color: #333; border: 1px solid #ddd;">
+        <div style="font-size: 3em; margin-bottom: 15px;">👤</div>
+        <h3 style="color: #333;">Candidats</h3>
+        <p style="font-size: 0.9em; color: #666;">Ajouter / Modifier</p>
+    </a>
+
+    <a href="{% url 'elections:liste_centres' %}" class="stat-card dashboard-link" style="text-decoration: none; cursor: pointer; background: white; color: #333; border: 1px solid #ddd;">
+        <div style="font-size: 3em; margin-bottom: 15px;">🏢</div>
+        <h3 style="color: #333;">Centres</h3>
+        <p style="font-size: 0.9em; color: #666;">Ajouter / Modifier</p>
+    </a>
+
+    <a href="{% url 'elections:liste_bureaux' %}" class="stat-card dashboard-link" style="text-decoration: none; cursor: pointer; background: white; color: #333; border: 1px solid #ddd;">
+        <div style="font-size: 3em; margin-bottom: 15px;">🗳️</div>
+        <h3 style="color: #333;">Bureaux</h3>
+        <p style="font-size: 0.9em; color: #666;">Ajouter / Modifier</p>
+    </a>
+</div>
+
+<style>
+    .dashboard-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}

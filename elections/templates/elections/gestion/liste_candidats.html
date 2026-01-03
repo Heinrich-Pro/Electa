@@ -1,0 +1,42 @@
+{% extends 'elections/base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1 style="color: #2a5298;">👤 Liste des Candidats</h1>
+    <a href="{% url 'elections:ajouter_candidat' %}" class="stat-card" style="padding: 10px 20px; text-decoration: none; font-size: 1em; background: #28a745;">+ Ajouter Candidat</a>
+</div>
+
+<div class="centre-section">
+    <table>
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom & Prénom</th>
+                <th>Parti</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidat in candidats %}
+            <tr>
+                <td><strong>{{ candidat.numero }}</strong></td>
+                <td>{{ candidat.prenom }} {{ candidat.nom }}</td>
+                <td>{{ candidat.parti }}</td>
+                <td>
+                    <a href="{% url 'elections:modifier_candidat' candidat.id %}" style="text-decoration: none; margin-right: 10px;">✏️ Modifier</a>
+                    <a href="{% url 'elections:supprimer_candidat' candidat.id %}" style="color: red; text-decoration: none;">🗑️ Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: #666;">Aucun candidat enregistré.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'elections:dashboard' %}" style="color: #667eea; text-decoration: none;">⬅️ Retour au tableau de bord</a>
+</div>
+{% endblock %}

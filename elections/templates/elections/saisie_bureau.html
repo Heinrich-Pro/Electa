@@ -1,0 +1,44 @@
+{% extends 'elections/base.html' %}
+
+{% block content %}
+<div class="row" style="display: flex; justify-content: center;">
+    <div class="col-md-6" style="width: 100%; max-width: 600px;">
+        <div class="stat-card" style="margin-bottom: 20px;">
+            <h2>🗳️ Saisie des Résultats</h2>
+            <p style="opacity: 0.8;">Veuillez sélectionner le bureau de vote pour saisir les résultats.</p>
+        </div>
+
+        <div class="centre-section">
+            <form method="post" action="">
+                {% csrf_token %}
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: bold; color: #333;">Bureau de Vote :</label>
+                    {{ form.bureau }}
+                </div>
+                <button type="submit" class="stat-card" style="width: 100%; border: none; cursor: pointer; font-size: 1.1em;">
+                    Continuer ➡️
+                </button>
+            </form>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/admin/" style="color: #667eea; text-decoration: none;">Retour à l'administration</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        background: white;
+    }
+    select:focus {
+        border-color: #667eea;
+        outline: none;
+    }
+</style>
+{% endblock %}

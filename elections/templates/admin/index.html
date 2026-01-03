@@ -1,0 +1,13 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div style="margin-bottom: 20px; padding: 15px; background: #fff; border-left: 4px solid #667eea; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <h2 style="margin-top: 0; color: #2a5298;">🚀 Actions Rapides</h2>
+    <p>Accédez à l'interface simplifiée pour la saisie des résultats des élections.</p>
+    <a href="{% url 'elections:saisie_donnees' %}" style="display: inline-block; background: #667eea; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        🗳️ Saisir des Résultats
+    </a>
+</div>
+
+{{ block.super }}
+{% endblock %}
